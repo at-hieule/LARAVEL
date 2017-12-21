@@ -28,6 +28,25 @@ class TaskController extends Controller
     return redirect('/tasks')->with('success','Task create successfully');
     }
   }
-  
+  public function edit($id)
+    {
+        $task = Task::find($id);
+        return view('tasks.edit',compact('task'));
+    }
+  public function update(Request $request, $id)
+    {
+        request()->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+        Task::find($id)->update($request->input('name'));
+        return redirect('/tasks')->with('success','Task updated successfully');
+    }
+  public function destroy($id)
+  {
+    
+    Task::destroy($id);
+    return redirect('/tasks')->with('success','Task deleted successfully');
+  }
 }
  
